@@ -59,12 +59,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chipp972/cryptobot-op.git"
+    "url": "git+https://github.com/chipp972/crud-mongoose-connector"
+
   },
   "author": "Nicolas Pierre-Charles <pierrecharles.nicolas@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chipp972/cryptobot-op/issues"
+    "url": "https://github.com/chipp972/crud-mongoose-connector/issues"
   },
-  "homepage": "https://github.com/chipp972/cryptobot-op#readme"
+  "homepage": "https://github.com/chipp972/crud-mongoose-connector#readme"
 }
