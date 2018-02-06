@@ -27,14 +27,8 @@
     "arrowParens": "always"
   },
   "lint-staged": {
-    "*.{ts}": [
-      "npm run format",
-      "npm run lint"
-    ],
-    "*.{ts,js,json,css,md}": [
-      "prettier --write",
-      "git add"
-    ]
+    "*.{ts}": ["npm run format", "npm run lint"],
+    "*.{ts,js,json,css,md}": ["prettier --write", "git add"]
   },
   "dependencies": {
     "mongoose": "5.0.3"
@@ -60,7 +54,6 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chipp972/crud-mongoose-connector"
-
   },
   "author": "Nicolas Pierre-Charles <pierrecharles.nicolas@gmail.com>",
   "license": "MIT",
