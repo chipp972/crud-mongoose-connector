@@ -2,4 +2,5 @@
 --reporter spec
 --watch-extensions ts
 --recursive
+--timeout 120000
 test/*.test.ts
