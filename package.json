@@ -6,7 +6,8 @@
   "engines": {
     "node": ">=8.9"
   },
-  "main": "./lib/src/index.js",
+  "main": "./lib/src/index",
+  "typings": "./lib/src/index",
   "scripts": {
     "clean": "rm -rf lib",
     "format": "prettier --write '{src,test}/**/*.ts'",
