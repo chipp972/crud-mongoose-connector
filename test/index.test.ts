@@ -87,6 +87,16 @@ describe('Mongoose Crud Connector', function() {
     expect(updateSpy.called).to.be.true;
   });
 
+  it('update operation with invalid id', async function() {
+    expect(
+      operations.update.bind({
+        id: 'id1',
+        data: { name: 'test8' },
+      }),
+    ).to.throw;
+    expect(updateSpy.called).to.be.false;
+  });
+
   it('delete operation', async function() {
     const obj = await operations.create({ data: { name: 'test' } });
     const res = await operations.delete({ id: obj._id });

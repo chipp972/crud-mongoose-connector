@@ -1,4 +1,29 @@
+import { customErrorFactory } from 'customizable-error';
 import mongoose from 'mongoose';
+
+const createMissingIdError = (operation: string, model: string) =>
+  customErrorFactory({
+    name: 'MissingId',
+    code: 'MISSING_ID',
+    status: 400,
+    message: `Missing id for ${operation} ${model} operation`,
+  });
+
+const createMissingDataError = (operation: string, model: string) =>
+  customErrorFactory({
+    name: 'MissingData',
+    code: 'MISSING_DATA',
+    status: 400,
+    message: `Missing data for ${operation} ${model} operation`,
+  });
+
+const createInvalidIdError = (operation: string, model: string, id: string) =>
+  customErrorFactory({
+    name: 'InvalidId',
+    code: 'INVALID_ID',
+    status: 400,
+    message: `Invalid id ${id} for ${operation} ${model} operation`,
+  });
 
 export interface MongooseCrudModel<T> {
   create: (params: { data: any }) => Promise<T>;
@@ -12,7 +37,7 @@ export function mongooseCrudConnector<T, U extends mongoose.Document>(
 ): MongooseCrudModel<T> {
   return {
     create: async ({ data }: { data: any }) => {
-      if (!data) throw new Error('No data in create operation');
+      if (!data) throw createMissingDataError('create', model.modelName);
       const res = await model.create(data);
       return res.toObject();
     },
@@ -23,17 +48,17 @@ export function mongooseCrudConnector<T, U extends mongoose.Document>(
         : res ? res.toObject() : res;
     },
     update: async ({ id, data }: { id: string; data?: any }) => {
-      if (!id) throw new Error('No id in update operation');
+      if (!id) throw createMissingIdError('update', model.modelName);
       const oldObj = await model.findById(id);
-      if (!oldObj) throw new Error('Invalid id');
+      if (!oldObj) throw createInvalidIdError('update', model.modelName, id);
       const newObj = Object.assign(oldObj, data);
       const res = await newObj.save();
       return res ? res.toObject() : res;
     },
     delete: async ({ id }: { id: string }) => {
-      if (!id) throw new Error('No id in delete operation');
+      if (!id) throw createMissingIdError('delete', model.modelName);
       const res = await model.findById(id);
-      if (!res) throw new Error('Invalid id');
+      if (!res) throw createInvalidIdError('delete', model.modelName, id);
       await res.remove();
       return res ? res.toObject() : res;
     },
